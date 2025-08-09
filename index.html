@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sironko Hydro Power - Sustainable Energy for Uganda</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap');
+        
+        :root {
+            --primary-green: #10b981;
+            --light-green: #34d399;
+            --mint-green: #6ee7b7;
+            --primary-blue: #0ea5e9;
+            --light-blue: #38bdf8;
+            --sky-blue: #7dd3fc;
+            --white: #ffffff;
+            --light-gray: #f8fafc;
+            --dark-text: #1f2937;
+            --gray-text: #64748b;
+        }
+        /* Map card for the Location section */
+        .map-card {
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(14, 165, 233, 0.15);
+            border: 2px solid rgba(14, 165, 233, 0.15);
+            overflow: hidden;
+        }
+
+        .map-embed {
+            position: relative;
+            width: 100%;
+            padding-bottom: 65%; /* aspect ratio for the map */
+        }
+
+        .map-embed iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-text);
+            overflow-x: hidden;
+        }
+
+        /* Tech Background with Image */
+        .tech-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: 
+                linear-gradient(135deg, rgba(255, 255, 255, 0) 0%, rgba(43, 96, 75, 0.9) 50%, rgba(56, 189, 248, 0.7) 100%),
+                url('https://images.unsplash.com/photo-1704183683766-37137be69d4f?q=80&w=2069&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+        }
+
+        .tech-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(16, 185, 129, 0.1) 0%, transparent 0%),
+                radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.1) 0%, transparent 0%),
+                radial-gradient(circle at 40% 80%, rgba(16, 185, 129, 0.08) 0%, transparent 0%);
+        }
+
+        .circuit-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0;
+            background-image: 
+                linear-gradient(90deg, rgba(16, 185, 129, 0.1) 10px, transparent 10px),
+                linear-gradient(rgba(14, 165, 233, 0.3) 10px, transparent 10px),
+                radial-gradient(circle at 25% 25%, rgba(16, 185, 129, 0.2) 2px, transparent 0.1px),
+                radial-gradient(circle at 75% 75%, rgba(14, 165, 233, 0.2) 2px, transparent 0.1px);
+            background-size: 100px 100px, 100px 100px, 200px 200px, 200px 200px;
+            animation: circuitMove 20s linear infinite;
+        }
+
+        @keyframes circuitMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(100px, 100px); }
+        }
+
+        /* Floating Tech Elements */
+        .tech-orb {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(16, 185, 129, 0.1), #0ea4e9be);
+            animation: float 8s ease-in-out infinite;
+            border: 2px solid rgba(16, 185, 129, 0.1);
+        }
+
+        .tech-orb:nth-child(1) {
+            width: 200px;
+            height: 200px;
+            top: 15%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .tech-orb:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .tech-orb:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            bottom: 25%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+
+        .tech-orb::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 60%;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.3), transparent);
+            border-radius: 50%;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(15px) rotate(240deg); }
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(2px);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+            max-width: 1000px;
+            padding: 0 2rem;
+            color: var(--dark-text);
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            font-family: 'IBM Plex Mono', monospace;
+            background: linear-gradient(45deg, var(--primary-blue), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            margin-bottom: 2rem;
+            font-weight: 400;
+            color: var(--white);
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(16, 185, 129, 0.2);
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            color: var(--primary-green);
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 1rem 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-green);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 3rem;
+            background: linear-gradient(45deg, var(--primary-green), var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Impact Section */
+        .impact-section {
+            background: rgba(248, 250, 252, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .impact-card {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--light-green);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
+        }
+
+        .impact-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--white), var(--light-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            color: var(--white);
+        }
+
+        .impact-card h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--dark-text);
+        }
+
+        .impact-card p {
+            color: var(--gray-text);
+            line-height: 1.6;
+        }
+
+        /* Tech Specs Section */
+        .tech-section {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(14, 165, 233, 0.1);
+            border-top: 4px solid var(--sky-blue);
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(14, 165, 233, 0.15);
+        }
+
+        .tech-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--light-green);
+            margin-bottom: 0.5rem;
+            font-family: 'IBM Plex Mono', monospace;
+        }
+
+        .tech-label {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        /* Location Section */
+        .location-section {
+            background: rgba(248, 250, 252, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .location-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .location-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--dark-text);
+        }
+
+        .location-highlight {
+            background: linear-gradient(135deg, var(--primary-green), var(--primary-blue));
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .location-highlight h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Progress Section */
+        .progress-section {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(15px);
+        }
+
+        .progress-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .progress-item {
+            margin: 2rem 0;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .progress-value {
+            font-weight: 700;
+            color: var(--primary-green);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-green), var(--light-green));
+            border-radius: 4px;
+            transition: width 2s ease-out;
+            animation: progressLoad 2s ease-out;
+        }
+
+        @keyframes progressLoad {
+            from { width: 0%; }
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%);
+            color: var(--white);
+            text-align: center;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--white);
+            color: var(--primary-green);
+            padding: 1.2rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            background: var(--light-gray);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .location-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            
+            .impact-grid,
+            .tech-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-item {
+                padding: 1rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="tech-bg"></div>
+    <div class="circuit-pattern"></div>
+
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">⚡ Sironko Hydro Power</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#impact">Impact</a></li>
+                <li><a href="#specs">Technology</a></li>
+                <li><a href="#location">Location</a></li>
+                <li><a href="#progress">Progress</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Tech Background -->
+    <section id="home" class="hero">
+        <div class="tech-orb"></div>
+        <div class="tech-orb"></div>
+        <div class="tech-orb"></div>
+        
+        <div class="hero-content">
+            <h1 class="hero-title">Sironko Hydro Power</h1>
+            <p class="hero-subtitle">Harnessing the power of River Sironko to bring clean, reliable electricity to Mount Elgon communities</p>
+            
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="power-output">400</span>
+                    <span class="stat-label">kWh Output</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="homes-powered">150</span>
+                    <span class="stat-label">Homes Powered</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="co2-saved">200</span>
+                    <span class="stat-label">Tons CO₂ Saved/Year</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="section impact-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Community Impact</h2>
+            <div class="impact-grid">
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">🏠</div>
+                    <h3>Powering Homes</h3>
+                    <p>Providing reliable 24/7 electricity to over 150 households in rural communities around Mount Elgon, transforming daily life and creating new opportunities.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">🏥</div>
+                    <h3>Healthcare Support</h3>
+                    <p>Enabling local clinics to operate essential medical equipment, maintain vaccine storage, and provide emergency services around the clock.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">📚</div>
+                    <h3>Education Enhancement</h3>
+                    <p>Powering schools with lighting and computer access, allowing students to study after dark and connect to digital learning resources.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">💼</div>
+                    <h3>Economic Growth</h3>
+                    <p>Supporting local businesses with reliable power supply, enabling new enterprises and creating sustainable employment opportunities.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">🌱</div>
+                    <h3>Environmental Benefit</h3>
+                    <p>Generating 100% clean renewable energy, eliminating over 200 tons of CO₂ emissions annually while preserving Mount Elgon's natural ecosystem.</p>
+                </div>
+                
+                <div class="impact-card fade-in">
+                    <div class="impact-icon">👥</div>
+                    <h3>Community Ownership</h3>
+                    <p>Training local technicians for maintenance and operation, ensuring long-term sustainability and creating skilled employment opportunities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Specifications -->
+    <section id="specs" class="section tech-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Technical Specifications</h2>
+            <div class="tech-grid">
+                <div class="tech-card fade-in">
+                    <div class="tech-value">400</div>
+                    <div class="tech-label">kWh Power Output</div>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-value">Sironko</div>
+                    <div class="tech-label">River Source</div>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-value">Pelton</div>
+                    <div class="tech-label">Turbine Type</div>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-value">45m</div>
+                    <div class="tech-label">Head Height</div>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-value">1.2</div>
+                    <div class="tech-label">m³/s Flow Rate</div>
+                </div>
+                
+                <div class="tech-card fade-in">
+                    <div class="tech-value">85%</div>
+                    <div class="tech-label">System Efficiency</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section id="location" class="section location-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Strategic Location</h2>
+            <div class="location-content">
+                <div class="location-text fade-in">
+                    <p>Our micro hydro power plant is strategically positioned on the banks of River Sironko, at the foothills of the magnificent Mount Elgon. This prime location offers optimal conditions for sustainable hydroelectric generation.</p>
+                    
+                    <p>The Sironko River, fed by Mount Elgon's abundant watershed, provides consistent water flow throughout the year. The natural elevation creates ideal conditions for our high-efficiency Pelton wheel turbine system.</p>
+                    
+                    <p>Our commitment to environmental stewardship ensures that Mount Elgon's pristine ecosystem remains protected while we harness clean energy to transform local communities for generations to come.</p>
+                </div>
+                
+                <div class="map-card fade-in" aria-label="Map of Sironko River region">
+                    <div class="map-embed">
+                        <!-- Simple embed without API key; centers on Sironko River, Uganda -->
+                        <iframe
+                            src="https://www.google.com/maps?q=Sironko%20River%2C%20Uganda&output=embed"
+                            loading="lazy"
+                            allowfullscreen
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Sironko River, Uganda on Google Maps">
+                        </iframe>
+                    </div>
+                    <div style="padding: 0.85rem; text-align: center;">
+                        <a href="https://www.google.com/maps?q=Sironko%20River%2C%20Uganda"
+                           target="_blank" rel="noopener"
+                           style="text-decoration: none; font-weight: 600; color: var(--primary-blue);">
+                            Open in Google Maps ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Progress Section -->
+    <section id="progress" class="section progress-section">
+        <div class="container">
+            <h2 class="section-title fade-in">Project Progress</h2>
+            <div class="progress-container">
+                <div class="progress-item fade-in">
+                    <div class="progress-header">
+                        <span class="progress-label">Environmental Impact Assessment</span>
+                        <span class="progress-value">100%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item fade-in">
+                    <div class="progress-header">
+                        <span class="progress-label">Community Consultation & Approval</span>
+                        <span class="progress-value">100%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 100%;"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item fade-in">
+                    <div class="progress-header">
+                        <span class="progress-label">Engineering Design & Planning</span>
+                        <span class="progress-value">90%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 90%;"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item fade-in">
+                    <div class="progress-header">
+                        <span class="progress-label">Funding & Investment Secured</span>
+                        <span class="progress-value">75%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 75%;"></div>
+                    </div>
+                </div>
+                
+                <div class="progress-item fade-in">
+                    <div class="progress-header">
+                        <span class="progress-label">Construction & Installation</span>
+                        <span class="progress-value">25%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 25%;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section id="contact" class="section cta-section">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Join Our Mission</h2>
+            <p style="font-size: 1.3rem; max-width: 700px; margin: 0 auto 2rem;">Together, we can bring sustainable energy to communities that need it most. Every contribution brings us closer to powering a brighter, cleaner future for Mount Elgon.</p>
+            <a href="mailto:vlad.barshchuk@gmail.com" class="cta-button">Get Involved Today</a>
+        </div>
+    </section>
+
+    <script>
+        // Animate numbers on scroll
+        function animateNumber(element, target, duration = 2000) {
+            let start = 0;
+            let startTime = null;
+            
+            function animate(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+                const value = Math.floor(progress * target);
+                element.textContent = value;
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    
+                    // Animate stat numbers
+                    if (entry.target.id === 'power-output') {
+                        animateNumber(entry.target, 400);
+                    } else if (entry.target.id === 'homes-powered') {
+                        animateNumber(entry.target, 150);
+                    } else if (entry.target.id === 'co2-saved') {
+                        animateNumber(entry.target, 200);
+                    }
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe all fade-in elements and stat numbers
+        document.querySelectorAll('.fade-in, .stat-number').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Enhanced navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(255,255,255,0.98)';
+                nav.style.boxShadow = '0 2px 20px rgba(16, 185, 129, 0.1)';
+            } else {
+                nav.style.background = 'rgba(255,255,255,0.95)';
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
